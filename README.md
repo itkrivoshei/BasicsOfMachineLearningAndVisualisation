@@ -1,7 +1,7 @@
 # 💼 Salary Prediction GUI
 
 <p align="center">
-  <img src="https://github.com/itkrivoshei/BasicsOfMachineLearningAndVisualisation/blob/main/demo.gif" height="400">
+  <img src="https://github.com/itkrivoshei/BasicsOfMachineLearningAndVisualisation/blob/main/demo.gif" height="1000">
 </p>
 
 Welcome to [Salary Prediction GUI](https://replit.com/@itkrivoshei/Basics-of-Machine-Learning-and-Visualisation), an interactive project designed to predict salaries based on years of experience using linear regression. This project includes a user-friendly GUI for easy data loading, model training, and visualization of results.
