@@ -8,6 +8,19 @@ import tkinter as tk  # For creating graphical user interfaces
 from tkinter import filedialog, messagebox  # For file dialog and message boxes in Tkinter
 import numpy as np  # For numerical operations (used for sorting indices in this context)
 
+# Dracula theme colors
+DRACULA_BACKGROUND = "#282a36"
+DRACULA_FOREGROUND = "#f8f8f2"
+DRACULA_CYAN = "#8be9fd"
+DRACULA_GREEN = "#50fa7b"
+DRACULA_ORANGE = "#ffb86c"
+DRACULA_PINK = "#ff79c6"
+DRACULA_PURPLE = "#bd93f9"
+DRACULA_RED = "#ff5555"
+DRACULA_YELLOW = "#f1fa8c"
+DRACULA_BLACK = "#000000"
+DRACULA_WHITE = "#ffffff"
+
 
 # Function to load the CSV data file
 def load_data(file_path):
@@ -48,10 +61,10 @@ def train_model(data):
 def plot_results(X_test, y_test, y_pred):
   # Create a new figure and axis for the plot
   fig, ax = plt.subplots(figsize=(10, 6))
-  # Plot the actual salaries as blue dots
-  ax.scatter(X_test, y_test, color='blue', label='Actual Salary')
-  # Plot the predicted salaries as red dots
-  ax.scatter(X_test, y_pred, color='red', label='Predicted Salary')
+  # Plot the actual salaries as cyan dots
+  ax.scatter(X_test, y_test, color=DRACULA_CYAN, label='Actual Salary')
+  # Plot the predicted salaries as pink dots
+  ax.scatter(X_test, y_pred, color=DRACULA_PINK, label='Predicted Salary')
   # Sort the values for a cleaner line plot
   sorted_idx = np.argsort(X_test['Experience (Years)'])
   X_test_sorted = X_test.iloc[sorted_idx]
@@ -59,17 +72,28 @@ def plot_results(X_test, y_test, y_pred):
   # Plot the regression line
   ax.plot(X_test_sorted,
           y_pred_sorted,
-          color='green',
+          color=DRACULA_GREEN,
           linewidth=2,
           label='Regression Line')
-  # Set the labels and title for the plot
-  ax.set_xlabel('Years of Experience')
-  ax.set_ylabel('Salary')
-  ax.set_title('Years of Experience vs Salary')
-  # Add a legend to the plot
-  ax.legend()
-  # Enable the grid
-  ax.grid(True)
+  # Set the background color for the plot
+  ax.set_facecolor(DRACULA_BACKGROUND)
+  # Set the labels and title for the plot with foreground color
+  ax.set_xlabel('Years of Experience', color=DRACULA_FOREGROUND)
+  ax.set_ylabel('Salary', color=DRACULA_FOREGROUND)
+  ax.set_title('Years of Experience vs Salary', color=DRACULA_FOREGROUND)
+  # Add a legend with background color and foreground text color
+  legend = ax.legend(facecolor=DRACULA_BACKGROUND,
+                     edgecolor=DRACULA_FOREGROUND)
+  plt.setp(legend.get_texts(), color=DRACULA_FOREGROUND)
+  # Enable the grid with foreground color
+  ax.grid(True, color=DRACULA_FOREGROUND)
+  # Set the background color for the figure
+  fig.patch.set_facecolor(DRACULA_BACKGROUND)
+
+  # Set the color of tick labels based on the background color
+  for label in ax.get_xticklabels() + ax.get_yticklabels():
+    label.set_color(DRACULA_WHITE)
+
   # Return the figure
   return fig
 
@@ -99,7 +123,6 @@ def on_train_model():
     messagebox.showinfo(
         "Model Trained",
         f"Model trained successfully!\nMSE: {mse}\nR-squared: {r2}")
-
     # Display the plot in the tkinter window
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.draw()
@@ -109,17 +132,26 @@ def on_train_model():
     messagebox.showerror("Error", "Please load the data first!")
 
 
-# Set up the GUI window
+# Set up the GUI window with Dracula theme colors
 window = tk.Tk()
 window.title("Regression Model - Salary Prediction")
 window.geometry("800x600")
+window.configure(bg=DRACULA_BACKGROUND)
 
-# Create a button to load the data
-btn_load_data = tk.Button(window, text="Load Data", command=on_load_data)
+# Create a button to load the data with black background and white text
+btn_load_data = tk.Button(window,
+                          text="Load Data",
+                          command=on_load_data,
+                          bg=DRACULA_GREEN,
+                          fg=DRACULA_BLACK)
 btn_load_data.pack(pady=20)
 
-# Create a button to train the model
-btn_train_model = tk.Button(window, text="Train Model", command=on_train_model)
+# Create a button to train the model with black background and white text
+btn_train_model = tk.Button(window,
+                            text="Train Model",
+                            command=on_train_model,
+                            bg=DRACULA_PINK,
+                            fg=DRACULA_BLACK)
 btn_train_model.pack(pady=20)
 
 # Initialize the variable to store the loaded data
